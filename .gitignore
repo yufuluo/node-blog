@@ -1,0 +1,35 @@
+# Editor files
+.idea
+.ropeproject
+.project
+.pydevproject
+
+# OS files
+.DS_Store
+
+# Compiled files
+.Python
+*.Plo
+*.Po
+*.a
+*.dylib
+*.egg-info
+*.la
+*.lai
+*.lo
+*.o
+*.pyc
+*.so
+
+# local development sql db
+flaskr.db
+
+# setup.py remnants
+.eggs
+flaskr.egg-info
+
+# local testing
+.pytest_cache
+
+# node
+node_modules

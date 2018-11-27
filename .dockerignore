@@ -1,0 +1,38 @@
+# git repo, if you need this in your docker image you're doing it wrong
+.git
+.gitignore
+LICENSE
+VERSION
+
+# Editor files
+.idea
+.ropeproject
+.project
+.pydevproject
+
+# OS files
+.DS_Store
+
+# Compiled files
+.Python
+*.Plo
+*.Po
+*.a
+*.dylib
+*.egg-info
+*.la
+*.lai
+*.lo
+*.o
+*.pyc
+*.so
+
+# local development sql db
+flaskr.db
+
+# setup.py remnants
+.eggs
+flaskr.egg-info
+
+# local testing
+.pytest_cache

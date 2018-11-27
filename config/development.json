@@ -1,0 +1,4 @@
+{
+  "DBHost": "mongodb://localhost:27017/node-blog-dev",
+  "port": 5000
+ }

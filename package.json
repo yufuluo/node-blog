@@ -1,0 +1,32 @@
+{
+  "name": "helloworld",
+  "version": "0.0.1",
+  "description": "a Simple Blog With Node, Express & Mongo",
+  "main": "app.js",
+  "scripts": {
+    "start": "node .",
+    "test": "mocha --timeout 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.internal.gracenote.com/DevOps/gn-flaskr.git"
+  },
+  "author": "Qijun Liu",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chai": "^4.0.0",
+    "chai-http": "^4.0.0",
+    "config": "^2.0.1",
+    "ejs": "^2.6.1",
+    "eslint": "^5.9.0",
+    "express": "^4.16.4",
+    "method-override": "^3.0.0",
+    "mocha": "^5.2.0",
+    "mongoose": "^5.3.10",
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "chai-fetch": "^0.3.1"
+  }
+}
