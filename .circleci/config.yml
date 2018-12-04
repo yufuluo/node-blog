@@ -1,0 +1,53 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:6.10.3
+
+    working_directory: ~/node-blog # directory where steps will run
+
+    steps:
+      - checkout # special step to check out source code to working directory
+
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+
+      # Download and cache dependencies
+      - restore_cache: # special step to restore the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+
+      - run:
+          name: install-npm-packages
+          command: npm install
+
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+          name: Setup Env
+          command: |
+            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+            echo 'export IMAGE_NAME=ndoe-blog' >> $BASH_ENV
+
+      - run: # run tests
+          name: test
+          command: npm test test/test.js
+
+      - setup_remote_docker:
+          docker_layer_caching: true
+
+      - run:
+          name: Build and push Docker image
+          command: |
+            . helloworld/bin/activate
+            pyinstaller -F hello_world.py
+            docker build -t yufuluo/$IMAGE_NAME:$TAG .
+            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+            docker push yufuluo/$IMAGE_NAME:$TAG
