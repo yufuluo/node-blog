@@ -24,7 +24,9 @@ jobs:
 
       - run:
           name: install-npm-packages
-          command: npm install
+          command: |
+          npm install strip --save
+          npm install
 
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
@@ -51,4 +53,3 @@ jobs:
             docker build -t yufuluo/$IMAGE_NAME:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push yufuluo/$IMAGE_NAME:$TAG
-            
