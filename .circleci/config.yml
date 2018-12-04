@@ -51,3 +51,4 @@ jobs:
             docker build -t yufuluo/$IMAGE_NAME:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push yufuluo/$IMAGE_NAME:$TAG
+            
