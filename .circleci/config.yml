@@ -31,24 +31,35 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+
       - run:
           name: Setup Env
           command: |
             echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
             echo 'export IMAGE_NAME=ndoe-blog' >> $BASH_ENV
 
-      - run: # run tests
-          name: test
-          command: npm test test/test.js
+      - run: # Linitng
+          name: Linting
+          command: ./node_modules/.bin/eslint app.js
 
       - setup_remote_docker:
           docker_layer_caching: true
 
       - run:
-          name: Build and push Docker image
+          name: Build Docker image
+          command: |
+            docker build -t yufuluo/$IMAGE_NAME:$TAG .
+
+      - run: # run tests
+          name: test
+          command: |
+            docker run yufuluo/$IMAGE_NAME:$TAG
+            docker exec yufuluo/$IMAGE_NAME:$TAG npm test test/test.js
+
+      - run:
+          name: Push Docker image
           command: |
             . helloworld/bin/activate
             pyinstaller -F hello_world.py
-            docker build -t yufuluo/$IMAGE_NAME:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push yufuluo/$IMAGE_NAME:$TAG
