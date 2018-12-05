@@ -53,10 +53,10 @@ jobs:
       - run: # Run tests
           name: test
           command: |
-            docker run -d yufuluo/$IMAGE_NAME:$TAG
+            docker run --name $IMAGE_NAME -dit yufuluo/$IMAGE_NAME:$TAG
             sleep 10
             docker ps -a
-            docker exec yufuluo/$IMAGE_NAME:$TAG npm test test/test.js
+            docker exec $IMAGE_NAME npm test test/test.js
           environment:
             NODE_ENV: test
 
