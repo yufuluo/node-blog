@@ -1,5 +1,5 @@
 {
-  "name": "helloworld",
+  "name": "node-blog",
   "version": "0.0.1",
   "description": "a Simple Blog With Node, Express & Mongo",
   "main": "app.js",
