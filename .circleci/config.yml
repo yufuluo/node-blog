@@ -36,7 +36,7 @@ jobs:
           name: Setup Environment Variables
           command: |
             echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=ndoe-blog' >> $BASH_ENV
+            echo 'export IMAGE_NAME=node-blog' >> $BASH_ENV
 
       - run: # Linitng
           name: Linting
@@ -48,7 +48,7 @@ jobs:
       - run: # Build image
           name: Build Docker image
           command: |
-            docker build -t yufuluo/$IMAGE_NAME:$TAG .
+            docker build -t yufuluo/$IMAGE_NAME:$TAG -t yufuluo/$IMAGE_NAME:latest .
 
       - run: # Run tests in the docker image that we just built
           name: test
