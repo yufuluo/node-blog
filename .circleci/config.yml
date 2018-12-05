@@ -6,20 +6,20 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
+      # Specify the docker container image version you desire here
       - image: circleci/node:8.14.0-jessie
 
-    working_directory: ~/node-blog # directory where steps will run
+    working_directory: ~/node-blog # Directory where steps will run
 
     steps:
-      - checkout # special step to check out source code to working directory
+      - checkout # Special step to check out source code to working directory
 
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
 
       # Download and cache dependencies
-      - restore_cache: # special step to restore the dependency cache
+      - restore_cache: # Special step to restore the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
 
       - run:
@@ -27,13 +27,13 @@ jobs:
           command: |
             npm install
 
-      - save_cache: # special step to save the dependency cache
+      - save_cache: # Special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
 
       - run:
-          name: Setup Env
+          name: Setup Environment Variables
           command: |
             echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
             echo 'export IMAGE_NAME=ndoe-blog' >> $BASH_ENV
@@ -45,18 +45,20 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
 
-      - run:
+      - run: # Build image
           name: Build Docker image
           command: |
             docker build -t yufuluo/$IMAGE_NAME:$TAG .
 
-      - run: # run tests
+      - run: # Run tests
           name: test
           command: |
-            docker run yufuluo/$IMAGE_NAME:$TAG
+            docker run -d yufuluo/$IMAGE_NAME:$TAG
             docker exec yufuluo/$IMAGE_NAME:$TAG npm test test/test.js
+          environment:
+            NODE_ENV: test
 
-      - run:
+      - run: # Push image
           name: Push Docker image
           command: |
             . helloworld/bin/activate
